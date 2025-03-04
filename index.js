@@ -1,68 +1,71 @@
-const config = require('./config');
-const mysql = require('mysql');
 const express = require('express');
+const config = require('./config');
+const mysql = require('mysql2');
 const cors = require("cors");
 const app = express();
-const port = 3000;
+const port = 39450; 
 
-const con = mysql.createConnection(config.sql);
+const pool = mysql.createPool({
+  host: config.sql.host,
+  user: config.sql.user,
+  password: config.sql.password,
+  database: config.sql.database,
+  port: config.sql.port,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
-app.use(express.static('public'))
+app.use(express.static('public'));
+
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error("Database connection failed:", err);
+    process.exit(1); 
+  } else {
+    console.log("Connected to database", config.sql.database, "on host", config.sql.host);
+    connection.release(); 
+  }
+});
 
 app.get('/', (req, res) => {
   res.send('<em>Your card reading</em>');
-})
+});
 
-app.get('/api/all',cors(), (req, res) => {
-  const statement = "SELECT * FROM tarots"
-
-  con.query(statement, (err, result) => {
+app.get('/api/all', cors(), (req, res) => {
+  const statement = "SELECT * FROM tarots";
+  pool.query(statement, (err, result) => {
     if (err) {
       console.log("error: ", err);
-      return;
+      return res.status(500).json({ error: "Database error" });
     }
-    if (result.length) {
-      res.json(result)
-    }
+    res.json(result);
   });
-})
+});
 
-app.get('/api/tarots',cors(), (req, res) => {
-  const statement = "SELECT * FROM tarots\
-                    ORDER BY RAND()\
-                    LIMIT 1;"
-
-  con.query(statement, (err, result) => {
+app.get('/api/tarots', cors(), (req, res) => {
+  const statement = "SELECT * FROM tarots ORDER BY RAND() LIMIT 1;";
+  pool.query(statement, (err, result) => {
     if (err) {
       console.log("error: ", err);
-      return;
+      return res.status(500).json({ error: "Database error" });
     }
-    if (result.length) {
-      res.json(result)
-    }
+    res.json(result);
   });
-})
+});
 
-app.get('/api/detail/:id',cors(), (req, res) => {
-  const statement = "SELECT * FROM tarots\
-  WHERE id = " + req.params.id
-  con.query(statement, (err, result) => {
-  if (err) {
-  console.log("error: ", err);
-  return;
-  }
-  if (result.length) {
-  res.json(result)
-  }
+app.get('/api/detail/:id', cors(), (req, res) => {
+  const statement = "SELECT * FROM tarots WHERE id = ?";
+  pool.query(statement, [req.params.id], (err, result) => {
+    if (err) {
+      console.log("error: ", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json(result);
   });
-  })
-  
+});
+
+
 app.listen(port, () => {
-  console.log(`Tarot card being drawn ${port}`);
-
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected to database",config.sql.database,"on host",config.sql.host);
-  });
-
+  console.log("Server running on http://localhost:${port}");
 });
