@@ -167,13 +167,13 @@
             window.location.href = "tarot-reading.html";
         });
 
-        const url = 'http://localhost:39450/api/tarots';
+        const url = '/api/tarots';
         jQuery.getJSON(url).done(function(data) {
             if (data.length > 0) {
                 const card = data[0];
                 document.getElementById("card-name").innerText = card.name;
                 document.getElementById("card-message").innerText = card.message;
-                document.getElementById("tarotCard").style.backgroundImage = `url('http://localhost:39450/images/${card.image_file}')`;
+                document.getElementById("tarotCard").style.backgroundImage = `url('/images/${card.image_file}')`;
             }
         });
     </script>
