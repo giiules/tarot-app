@@ -24,10 +24,10 @@ app.get('/', (req, res) => {
 
 pool.getConnection((err, connection) => {
   if (err) {
-    console.error("Database connection failed:", err);
+    console.error("Oh oh! The stars seem to not be aligning:", err);
     process.exit(1); 
   } else {
-    console.log("Connected to database", config.sql.database, "on host", config.sql.host);
+    console.log("Yes, there has been a connection", config.sql.database, "on host", config.sql.host);
     connection.release(); 
   }
 });
@@ -37,7 +37,7 @@ app.get('/api/all', cors(), (req, res) => {
   pool.query(statement, (err, result) => {
     if (err) {
       console.log("error: ", err);
-      return res.status(500).json({ error: "Database error" });
+      return res.status(500).json({ error: "Oh oh, no connection in the stars" });
     }
     res.json(result);
   });
@@ -48,7 +48,7 @@ app.get('/api/tarots', cors(), (req, res) => {
   pool.query(statement, (err, result) => {
     if (err) {
       console.log("error: ", err);
-      return res.status(500).json({ error: "Database error" });
+      return res.status(500).json({ error: "Oh oh, no connection in the stars" });
     }
     res.json(result);
   });
@@ -59,7 +59,7 @@ app.get('/api/detail/:id', cors(), (req, res) => {
   pool.query(statement, [req.params.id], (err, result) => {
     if (err) {
       console.log("error: ", err);
-      return res.status(500).json({ error: "Database error" });
+      return res.status(500).json({ error: "Oh oh, no connection in the stars" });
     }
     res.json(result);
   });
@@ -71,5 +71,5 @@ app.get('/images/:imageName', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Connection has been made on ${port}`);
 });

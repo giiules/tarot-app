@@ -81,7 +81,7 @@
             perspective: 1000px;
             box-shadow: 10px 5px 15px rgba(0, 0, 0, 0.5);
             display: flex;
-            justify-content: center; /* Ensures the image inside is also centered */
+            justify-content: center;
             align-items: center;
         }
 
@@ -175,8 +175,8 @@
                     }
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching tarot data:', textStatus, errorThrown);
-                    document.getElementById("card-message").innerText = "Error fetching tarot card.";
+                    console.error('Oh oh, unable to make a connection', textStatus, errorThrown);
+                    document.getElementById("card-message").innerText = "Oh oh, unable to fetch your card.";
                 });
         }
     </script>
