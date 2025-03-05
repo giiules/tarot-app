@@ -18,6 +18,10 @@ const pool = mysql.createPool({
 
 app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/tarot.html');
+});
+
 pool.getConnection((err, connection) => {
   if (err) {
     console.error("Database connection failed:", err);
@@ -26,10 +30,6 @@ pool.getConnection((err, connection) => {
     console.log("Connected to database", config.sql.database, "on host", config.sql.host);
     connection.release(); 
   }
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/tarot.html');
 });
 
 app.get('/api/all', cors(), (req, res) => {
@@ -67,21 +67,9 @@ app.get('/api/detail/:id', cors(), (req, res) => {
 
 app.get('/images/:imageName', (req, res) => {
   const imageName = req.params.imageName;
-  const options = {
-      root: __dirname + '/public/',
-      headers: {
-          'Content-Type': 'image/png',
-      },
-  };
-  
-  res.sendFile(imageName, options, (err) => {
-      if (err) {
-          console.log("Error sending image:", err);
-          res.status(404).send('Image not found');
-      }
-  });
+  res.sendFile(__dirname + '/public/images/' + imageName);
 });
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
