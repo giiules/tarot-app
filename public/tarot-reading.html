@@ -155,23 +155,30 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("contentContainer").style.opacity = "1";
+            document.getElementById("revealButton").addEventListener("click", function(event) {
+                event.preventDefault();
+                fetchNewCard();
+            });
+            fetchNewCard();
         });
 
-        const url = '/api/tarots';
-        jQuery.getJSON(url)
-            .done(function(data) {
-                console.log("API response:", data);
-                if (data.length > 0) {
-                    const card = data[0];
-                    document.getElementById("card-name").innerText = card.name;
-                    document.getElementById("card-message").innerText = card.message;
-                    document.getElementById("tarotCard").style.backgroundImage = `url('/images/${card.image_file}')`;
-                }
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                console.error('Error fetching tarot data:', textStatus, errorThrown);
-                document.getElementById("card-message").innerText = "Error fetching tarot card.";
-            });
+        function fetchNewCard() {
+            const url = '/api/tarots';
+            jQuery.getJSON(url)
+                .done(function(data) {
+                    console.log("API response:", data);
+                    if (data.length > 0) {
+                        const card = data[0];
+                        document.getElementById("card-name").innerText = card.name;
+                        document.getElementById("card-message").innerText = card.message;
+                        document.getElementById("tarotCard").style.backgroundImage = `url('/images/${card.image_file}')`;
+                    }
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching tarot data:', textStatus, errorThrown);
+                    document.getElementById("card-message").innerText = "Error fetching tarot card.";
+                });
+        }
     </script>
 </body>
 </html>
