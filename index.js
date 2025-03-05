@@ -3,7 +3,7 @@ const config = require('./config');
 const mysql = require('mysql2');
 const cors = require("cors");
 const app = express();
-const port = 39450; 
+const port = process.env.PORT || 39450;
 
 const pool = mysql.createPool({
   host: config.sql.host,
@@ -29,7 +29,7 @@ pool.getConnection((err, connection) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('<em>Your card reading</em>');
+  res.sendFile(__dirname + '/tarot.html');
 });
 
 app.get('/api/all', cors(), (req, res) => {
@@ -65,7 +65,23 @@ app.get('/api/detail/:id', cors(), (req, res) => {
   });
 });
 
+app.get('/images/:imageName', (req, res) => {
+  const imageName = req.params.imageName;
+  const options = {
+      root: __dirname + '/public/',
+      headers: {
+          'Content-Type': 'image/png',
+      },
+  };
+  
+  res.sendFile(imageName, options, (err) => {
+      if (err) {
+          console.log("Error sending image:", err);
+          res.status(404).send('Image not found');
+      }
+  });
+});
 
 app.listen(port, () => {
-  console.log("Server running on http://localhost:${port}");
+  console.log(`Server running on http://localhost:${port}`);
 });

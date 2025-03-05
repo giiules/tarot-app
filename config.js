@@ -1,9 +1,10 @@
 let config = {};
 config.sql = {};
 
-config.sql.host = "interchange.proxy.rlwy.net";
-config.sql.port = 39450;
-config.sql.user = "root";
-config.sql.password = "gOQHyazSHHlIBlukvhjZgqzczezgvdyd";
-config.sql.database = "railway";
+config.sql.host = process.env.HOST;
+config.sql.port = process.env.PORT;
+config.sql.user = process.env.USER;
+config.sql.password = process.env.PASSWORD;
+config.sql.database = process.env.DATABASE;
+
 module.exports = config;

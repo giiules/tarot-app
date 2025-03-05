@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Reading</title>
+    <title>Ask the cards</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/css/uikit.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/js/uikit-icons.min.js"></script>
-    <script src="js/jquery-3.6.1.min.js"></script>
     
     <style>
         body {
@@ -41,8 +40,7 @@
             padding: 50px;
             max-width: 1200px;
             margin: auto;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.6s ease-in-out;
         }
 
         .text-section {
@@ -51,11 +49,11 @@
             color: white;
             margin-right: 100px;
         }
-        
-        .text-section h3 {
+
+        .text-section h1, .text-section h2, .text-section h3 {
             color: white;
             font-weight: bold;
-            font-size: 48px;
+            margin-top: 40px;
             font-family: 'medievalsharp';
         }
 
@@ -66,12 +64,9 @@
 
         .card-section {
             width: 33%;
-            justify-content: center;
-            align-items: center;
             text-align: center;
             position: relative;
         }
-
 
         .tarot-card-wrapper {
             position: relative;
@@ -80,9 +75,6 @@
             margin: auto;
             perspective: 1000px;
             box-shadow: 10px 5px 15px rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center; /* Ensures the image inside is also centered */
-            align-items: center;
         }
 
         .tarot-card {
@@ -90,8 +82,18 @@
             height: 100%;
             border-radius: 10px;
             cursor: pointer;
+            background: url('public/back-of-card.png') no-repeat center center;
             background-size: cover;
-            background-position: center; 
+            transform-origin: center;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .flipped {
+            transform: rotateY(180deg);
+        }
+
+        .fade-out {
+            opacity: 0;
         }
 
         .reveal-button {
@@ -124,7 +126,6 @@
         text-decoration: underline;
         color: white;
         }
-
     </style>
 </head>
 
@@ -135,46 +136,51 @@
     
     <div class="container" id="contentContainer">
         <div class="text-section">
-            <h3 id="card-name">Loading...</h3>  
-            <p id="card-message">Fetching your tarot card...</p>
-            <button class="reveal-button" id="revealButton">Reveal a new card</button>
+            <h2>About the project</h2>
+            <p>Hiya! Thanks for wanting to learn more about this project, in short, it is an assignment for my Master's in Digital Journalism. The course is split between the journalism and computing department and for the computing side we learn the basics of html, css, jacascript and more. I really wanted to focus on the more techy side, so I thought "Let's create an app!"</p>
+            <p>Where I am not a tarot-expert by no means, I find a lot of reassurance in being guided by the cards; where many may not agree with me, I know I am not the only one – that is where my mind stumbled to create a tarot-reading app. I thought the app would be useful as an extension of an online magazine or even a news site to drive audiences. Additionally, it gave me the task to not only experiment with the code but with design. Yup, I created all of the tarot cards as pngs in Procreate!</p>
+            <p>In terms of the coding aspect, I based a lot of my learnings on the lecture on node and sql databases on phpMyAdmin. After some initial struggles I managed to get all working locally, but, alas, I soon discovered that was just the tip of the iceberg. I had to deploy it! And, in order to deply it, I had to select and recreate another database and find a server to use. That is when the thick forest part of my adventure began.</p>
+            <p>First thing first, with zero knowledge of any of this world, I did what many do, I asked the Internet: from exploring blog sites, so asking ChatGPT, I eded up using railway which offered both a database and deployment (this also made the paying fee cheaper!)</p>
+            <p>I'd like to say it was all ... </p>
+            <button class="reveal-button" id="revealButton">Reveal a card</button>
             <a href="tarot-all.html" class="reveal-button">Discover the full deck</a>
         </div>
+        
         <div class="card-section">
             <div class="tarot-card-wrapper" id="tarotCardWrapper">
                 <div id="tarotCard" class="tarot-card"></div>
             </div>
         </div>
     </div>
-
+    
     <div class="footer">
         <p>This is a project for my Master's where I am trying to learn the basic ins and outs  of html, css, javascript and more, all while experimenting with designs and creativity where I can.</p>
-        <p></p>© Giulia Serrelli | <a href="info.html" style="color: white;">Learn more about me and the project</a> and <a href="https://www.linkedin.com/in/giulia-serrelli/" style="color: white;">connect with me on LinkedIn</a>.</p>
+        <p></p>© Giulia Serrelli | <a href="tarot-all.html" style="color: white;">Learn more about me and the project</a> and <a href="https://www.linkedin.com/in/giulia-serrelli/" style="color: white;">connect with me on LinkedIn</a>.</p>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("contentContainer").style.opacity = "1";
+        function flipCardAndFade() {
+            let card = document.getElementById("tarotCard");
+            let shadowWrapper = document.getElementById("tarotCardWrapper");
+            let contentContainer = document.getElementById("contentContainer");
+
+            shadowWrapper.style.boxShadow = "none";
+            card.classList.add("flipped");
+            contentContainer.classList.add("fade-out");
+
+            setTimeout(() => {
+                window.location.href = "tarot-reading.html";
+            }, 600);
+        }
+
+        document.getElementById("tarotCard").addEventListener("click", function(event) {
+            event.preventDefault();
+            flipCardAndFade();
         });
 
         document.getElementById("revealButton").addEventListener("click", function(event) {
             event.preventDefault();
-            window.location.href = "tarot-reading.html";
-        });
-
-        document.getElementById("tarotCard").addEventListener("click", function(event) {
-            event.preventDefault();
-            window.location.href = "tarot-reading.html";
-        });
-
-        const url = 'http://localhost:39450/api/tarots';
-        jQuery.getJSON(url).done(function(data) {
-            if (data.length > 0) {
-                const card = data[0];
-                document.getElementById("card-name").innerText = card.name;
-                document.getElementById("card-message").innerText = card.message;
-                document.getElementById("tarotCard").style.backgroundImage = `url('http://localhost:39450/images/${card.image_file}')`;
-            }
+            flipCardAndFade();
         });
     </script>
 </body>
