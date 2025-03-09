@@ -62,6 +62,11 @@
             font-size: 18px;
         }
 
+        .text-section a {
+        text-decoration: underline;
+        color: white;
+        }
+
         .card-section {
             width: 33%;
             text-align: center;
@@ -113,7 +118,7 @@
             text-align: left;
             padding: 20px;
             margin-left: 50px;
-            margin-top: 5px;
+            margin-top: 50px;
             color: white;
             line-height: 1;
         }
@@ -126,6 +131,31 @@
         text-decoration: underline;
         color: white;
         }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .text-section {
+                width: 90%;
+                margin-left: 160px;
+                margin-bottom: 20px;
+                padding-right: 40px;
+                text-align: left;
+            }
+            .card-section {
+                width: 100%;
+            }
+            .header {
+                font-size: 60px;
+                margin-left: 20px;
+            }
+            .footer {
+                margin-left: 20px;
+            }
+        }
+
     </style>
 </head>
 
@@ -137,17 +167,20 @@
     <div class="container" id="contentContainer">
         <div class="text-section">
             <h2>About the project</h2>
-            <p>Hiya! Thanks for wanting to learn more about this project, in short, it is an assignment for my Master's in Digital Journalism. The course is split between the journalism and computing department and for the computing side we learn the basics of html, css, jacascript and more. I really wanted to focus on the more techy side, so I thought "Let's create an app!"</p>
-            <p>Where I am not a tarot-expert by no means, I find a lot of reassurance in being guided by the cards; where many may not agree with me, I know I am not the only one – that is where my mind stumbled to create a tarot-reading app. I thought the app would be useful as an extension of an online magazine or even a news site to drive audiences. Additionally, it gave me the task to not only experiment with the code but with design. Yup, I created all of the tarot cards as pngs in Procreate!</p>
-            <p>In terms of the coding aspect, I based a lot of my learnings on the lecture on node and sql databases on phpMyAdmin. After some initial struggles I managed to get all working locally, but, alas, I soon discovered that was just the tip of the iceberg. I had to deploy it! And, in order to deply it, I had to select and recreate another database and find a server to use. That is when the thick forest part of my adventure began.</p>
-            <p>First thing first, with zero knowledge of any of this world, I did what many do, I asked the Internet: from exploring blog sites, so asking ChatGPT, I eded up using railway which offered both a database and deployment (this also made the paying fee cheaper!)</p>
-            <p>I'd like to say it was all ... </p>
-            <button class="reveal-button" id="revealButton">Reveal a card</button>
-            <a href="tarot-all.html" class="reveal-button">Discover the full deck</a>
+            <p>Hiya!</p>
+            <p>Thanks for wanting to learn more about this project, in short, it is an assignment for my Master's in Digital Journalism. The course is split between the journalism and computing departments: on the computing side, we learn the basics of html, css, jacascript and more. I really wanted to focus on the more technical aspects for this assignment, so I thought "Let's create an app!"</p>
+            <p>Where I am not a tarot-expert by no means, I find a lot of reassurance in being guided by the cards. While many may not agree with me, I know I am not the only one. As I looked to create an app, my mind eventually set on creating a tarot-reading one since I thought it would be useful as an extension of an online magazine or even a news site to drive audiences (kind of like how the games on The New York Times drive a few subscriptions). Additionally, it gave me the task to not only experiment with the coding part, but also with designs: I designed all of the tarot cards as pngs in Procreate looking for inspiration from others!</p>
+            <p>In terms of the coding aspect, I based a lot of my learnings on the lectures on node, APIs and the SQL database on phpMyAdmin. After some initial struggles I managed to get all working locally, but, alas, I soon discovered that was just the tip of the iceberg: I had to deploy it! And, in order to deploy it, I could not work with a local API. That is when the thick forest part of my adventure began.</p>
+            <p>First thing first, with zero knowledge of any of this world, I did what many do, I asked the Internet: after a combination of exploring blog sites and asking ChatGPT, I understood the general gist: I had to recreate a database elsewhere and find a server that would support node. I ended up using Railway which offered both a database and the deployment (this also made the paying fee cheaper!)</p>
+            <p>I initially created a MySQL database in Railway, copying the table format of the phpMyAdmin one and successfully updating the code to link to that table instead. Then, I uploaded my files on GitHub so that I could deploy them on Railway. You think that would do the trick but it did not quite do it. There were several issues including not loading the html page I wanted to be the landing page and the images were no longer showing from my SQL.</p>
+            <p>I soon realised the deployment had created the API, so I had to update the code to no longer be a local one but rather link to the new API: success! But, I still had the issue with the page. The problem? There were two: the node code and the file structure. My code was telling the server to respond with a textual message and not with an html page. I updated the code to the page I wanted to show, but then, I would get a 502 Bad Gateway message. I learned this was because my files were all a mess – they were not in the right hierarchy that Railway was expecting.</p>
+            <p>I moved the files on GitHub to store the "static" ones in the public folder (moving also the png images that were in that folder to a sub-folder, and updated the code to not break the path in the node). However, I was unable to redeploy it all successfully. I did what I hope many do, and started from scratch. Rather than updating directly in GitHub, I updated my files locally with all the information and steps I had learned about and then I pushed the updated files to GitHub anew via the terminal. AND I MANAGED.</p>
+            <p>As the "final" steps, I looked to clean up the pages, adding some scrolltelling,alt-text and making them more mobile responsive. I learned my lesson and stuck to local tweaks that I later pushed to Git Hub. Finally, I took one final technical step to create a personalised domain.</p>
+            <p>Anyway, enough about me and the making of the project, can I invite you to <strong><a href="tarot-reading.html">test it</a></strong>?</p>
         </div>
         
         <div class="card-section">
-            <div class="tarot-card-wrapper" id="tarotCardWrapper">
+                <img src="images/info.png" alt="a collection of tarot card images">
                 <div id="tarotCard" class="tarot-card"></div>
             </div>
         </div>
@@ -155,33 +188,8 @@
     
     <div class="footer">
         <p>This is a project for my Master's where I am trying to learn the basic ins and outs  of html, css, javascript and more, all while experimenting with designs and creativity where I can.</p>
-        <p></p>© Giulia Serrelli | <a href="tarot-all.html" style="color: white;">Learn more about me and the project</a> and <a href="https://www.linkedin.com/in/giulia-serrelli/" style="color: white;">connect with me on LinkedIn</a>.</p>
+        <p></p>© Giulia Serrelli | <a href="tarot-all.html" style="color: white;"><a href="https://www.linkedin.com/in/giulia-serrelli/" style="color: white;">Connect with me on LinkedIn</a>.</p>
     </div>
-
-    <script>
-        function flipCardAndFade() {
-            let card = document.getElementById("tarotCard");
-            let shadowWrapper = document.getElementById("tarotCardWrapper");
-            let contentContainer = document.getElementById("contentContainer");
-
-            shadowWrapper.style.boxShadow = "none";
-            card.classList.add("flipped");
-            contentContainer.classList.add("fade-out");
-
-            setTimeout(() => {
-                window.location.href = "tarot-reading.html";
-            }, 600);
-        }
-
-        document.getElementById("tarotCard").addEventListener("click", function(event) {
-            event.preventDefault();
-            flipCardAndFade();
-        });
-
-        document.getElementById("revealButton").addEventListener("click", function(event) {
-            event.preventDefault();
-            flipCardAndFade();
-        });
-    </script>
+    
 </body>
 </html>
