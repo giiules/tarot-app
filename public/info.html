@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your tarot-reading app">
+    <meta name="keywords" content="tarot, tarot reading, tarot cards, fate">
+    <link rel="canonical" href="https://tarot-app-production.up.railway.app/info.html">
+    <title>Ask the cards</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/css/uikit.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/js/uikit-icons.min.js"></script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #2c003e, #6a0dad);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .header {
+            text-align: left;
+            padding: 20px;
+            padding-bottom: 0px;
+            margin-left: 50px;
+            font-family: 'medievalsharp';
+            font-size: 90px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px;
+            max-width: 1200px;
+            margin: auto;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .text-section {
+            width: 66%;
+            text-align: left;
+            color: white;
+            margin-right: 100px;
+        }
+
+        .text-section h1, .text-section h2, .text-section h3 {
+            color: white;
+            font-weight: bold;
+            margin-top: 40px;
+            font-family: 'medievalsharp';
+        }
+
+        .text-section p {
+            color: white;
+            font-size: 18px;
+        }
+
+        .text-section a {
+        text-decoration: underline;
+        color: white;
+        }
+
+        .card-section {
+            width: 33%;
+            text-align: center;
+            position: relative;
+        }
+
+        .tarot-card-wrapper {
+            position: relative;
+            width: 250px;
+            height: 450px;
+            margin: auto;
+            perspective: 1000px;
+            box-shadow: 10px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .tarot-card {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            background: url('images/back-of-card.png') no-repeat center center;
+            background-size: cover;
+            transform-origin: center;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .flipped {
+            transform: rotateY(180deg);
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
+        .reveal-button {
+            background: black;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 20px;
+            margin-top: 20px;
+            font-family: 'medievalsharp';
+        }
+
+        .footer {
+            text-align: left;
+            padding: 20px;
+            margin-left: 50px;
+            margin-top: 50px;
+            color: white;
+            line-height: 1;
+        }
+
+        .footer p:first-of-type {
+        font-style: italic;
+         }
+
+         .footer a {
+        text-decoration: underline;
+        color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .text-section {
+                width: 90%;
+                margin-left: 160px;
+                margin-bottom: 20px;
+                padding-right: 40px;
+                text-align: left;
+            }
+            .card-section {
+                width: 100%;
+            }
+            .header {
+                font-size: 60px;
+                margin-left: 20px;
+            }
+            .footer {
+                margin-left: 20px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="tarot.html" style="color: white; text-decoration: none;">Mystic Tarots</a>
+    </div>
+    
+    <div class="container" id="contentContainer">
+        <div class="text-section">
+            <h2>About the project</h2>
+            <p>Hiya!</p>
+            <p>Thanks for wanting to learn more about this project, in short, it is an assignment for my Master's in Digital Journalism. The course is split between the journalism and computing departments: on the computing side, we learn the basics of HTML, CSS and JavaScript and more. I really wanted to focus on the more technical aspects for this assignment, so I thought: "Let's create an app!"</p>
+            <p>Where I am by no means a tarot-expert, I find a lot of reassurance in being guided by the cards. While many may not believe in the cards, I know I am not the only one. As I looked to create an app, my mind eventually set on creating a tarot-reading one since I thought it would be useful as an extension of an online magazine or even a news site to drive audiences (kind of like how the games on <i>The New York Times</i> drives subscriptions). Additionally, it gave me the opportunity to not only experiment with the coding part, but also with design: I designed all of the tarot cards as PNG images in Procreate, looking for inspiration from others!</p>
+            <p>In terms of the coding aspect, I based a lot of my code on the templates shared in the lectures on node, APIs and the SQL database on phpMyAdmin. After some initial struggles, I managed to get it all working locally, but alas, I soon discovered that was just the tip of the iceberg: I had to deploy it! And, in order to deploy it, I could not work with a local API. That is when – as the saying goes – the thickets part of the forest of my adventure began.</p>
+            <p>First thing first, with zero knowledge of any of this world, I did what many do, I searched the Internet. After a combination of exploring blog sites and asking ChatGPT, I understood the general gist – I had to recreate a database elsewhere and find a server that would support node. I ended up using Railway which offered both a database and the deployment (this also made the paying fee cheaper!)</p>
+            <p>I initially created a MySQL database in Railway, copying the table format of the phpMyAdmin one. Then, I successfully updated the code to link to that table instead. Following this, I uploaded my files on GitHub so that I could deploy them on Railway. You think that would do the trick but it did not quite do it. There were several issues including not loading the html page that I wanted to be the landing page and the images were no longer showing from my SQL.</p>
+            <p>I soon realised the deployment had created the API, so, I had to update the code to no longer link to a local one (which it was doing at that point) but rather to the new API. Success! But, I still had the issue with the page. The problem? Rather, problems. There were two: the node code and the file structure. My code was telling the server to respond with a textual message and not with an HTML page. I updated the code to the page I wanted to show, but I would get a 502 Bad Gateway message. This was because my files were all a mess – they were not in the right hierarchy that Railway was expecting.</p>
+            <p>I moved the files on GitHub to store the "static" ones in the public folder (moving also the PNG images that were in that folder to a sub-folder, and updated the code to not break the path in the node). However, I was unable to redeploy it all successfully. It kept crashing. So, I decided to start from scratch. Rather than updating directly in GitHub, I updated my files locally with all the information and steps I had learned about and then I pushed the updated files to GitHub, anew, via the terminal. AND I MANAGED!</p>
+            <p>For the "final" steps, I cleaned up the pages, adding as best I could alt-text and making them more mobile responsive (yes, some improvement still pending on these). I learned my lesson and stuck to making the tweaks locally, and later pushing them to GitHub. Next challenge? Make it actually mobile responsice and try and personalise the domain. Stay tuned!</p>
+            <p>Anyway, enough about the making of the project, can I invite you to <strong><a href="tarot-reading.html">test it</a></strong>?</p>
+        </div>
+        
+        <div class="card-section">
+                <img src="images/info.png" alt="a collection of tarot card images">
+                <div id="tarotCard" class="tarot-card"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>This is a project for my Master's where I am trying to learn the basic ins and outs  of html, css, javascript and more, all while experimenting with designs and creativity where I can.</p>
+        <p></p>© Giulia Serrelli | <a href="tarot-all.html" style="color: white;"><a href="https://www.linkedin.com/in/giulia-serrelli/" style="color: white;">Connect with me on LinkedIn</a>.</p>
+    </div>
+    
+</body>
+</html>

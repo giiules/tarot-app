@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your tarot-reading app">
+    <meta name="keywords" content="tarot, tarot reading, tarot cards, fate">
+    <link rel="canonical" href="https://tarot-app-production.up.railway.app/tarot-reading.html">
+    <title>Your Reading</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/css/uikit.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.26/dist/js/uikit-icons.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #2c003e, #6a0dad);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .header {
+            text-align: left;
+            padding: 20px;
+            padding-bottom: 0px;
+            margin-left: 50px;
+            font-family: 'medievalsharp';
+            font-size: 90px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px;
+            max-width: 1200px;
+            margin: auto;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .text-section {
+            width: 66%;
+            text-align: left;
+            color: white;
+            margin-right: 100px;
+        }
+        
+        .text-section h3 {
+            color: white;
+            font-weight: bold;
+            font-size: 48px;
+            font-family: 'medievalsharp';
+        }
+
+        .text-section p {
+            color: white;
+            font-size: 18px;
+        }
+
+        .card-section {
+            width: 33%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .tarot-card-wrapper {
+            position: relative;
+            width: 250px;
+            height: 450px;
+            margin: auto;
+            perspective: 1000px;
+            box-shadow: 10px 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tarot-card {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center; 
+        }
+
+        .reveal-button {
+            background: black;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 20px;
+            margin-top: 20px;
+            font-family: 'medievalsharp';
+            display: inline-block;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer {
+            text-align: left;
+            padding: 20px;
+            margin-left: 50px;
+            margin-top: 5px;
+            color: white;
+            line-height: 1;
+        }
+
+        .footer p:first-of-type {
+            font-style: italic;
+        }
+
+        .footer a {
+            text-decoration: underline;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .text-section {
+                width: 100%;
+                margin-left: 175px;
+                margin-bottom: 20px;
+                text-align: left;
+                padding-right: 30px;
+            }
+            .card-section {
+                width: 100%;
+            }
+            .header {
+                font-size: 60px;
+                margin-left: 20px;
+            }
+            .footer {
+                margin-left: 20px;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="tarot.html" style="color: white; text-decoration: none;">Mystic Tarots</a>
+    </div>
+    
+    <div class="container" id="contentContainer">
+        <div class="text-section">
+            <h3 id="card-name">Loading...</h3>  
+            <p id="card-message">Fetching your tarot card...</p>
+            <div class="button-group">
+                <button class="reveal-button" id="revealButton">Reveal a new card</button>
+                <a href="tarot-all.html" class="reveal-button">Discover the full deck</a>
+            </div>
+        </div>
+        <div class="card-section">
+            <div class="tarot-card-wrapper" id="tarotCardWrapper">
+                <div id="tarotCard" class="tarot-card" alt="A tarot card"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>This is a project for my Master's where I am trying to learn the basic ins and outs  of HTML, CSS, JavaScript and more, all while experimenting with designs and creativity where I can.</p>
+        <p>© Giulia Serrelli | <a href="info.html" style="color: white;">Learn more about the project</a> and <a href="https://www.linkedin.com/in/giulia-serrelli/" style="color: white;">connect with me on LinkedIn</a>.</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("contentContainer").style.opacity = "1";
+            document.getElementById("revealButton").addEventListener("click", function(event) {
+                event.preventDefault();
+                fetchNewCard();
+            });
+            fetchNewCard();
+        });
+
+        function fetchNewCard() {
+            const url = '/api/tarots';
+            jQuery.getJSON(url)
+                .done(function(data) {
+                    if (data.length > 0) {
+                        const card = data[0];
+                        document.getElementById("card-name").innerText = card.name;
+                        document.getElementById("card-message").innerText = card.message;
+                        document.getElementById("tarotCard").style.backgroundImage = `url('/images/${card.image_file}')`;
+                    }
+                })
+                .fail(function() {
+                    document.getElementById("card-message").innerText = "Oh oh, unable to fetch your card.";
+                });
+        }
+    </script>
+</body>
+</html>
