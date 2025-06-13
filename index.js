@@ -5,6 +5,14 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 39450;
 
+console.log("🧪 DB CONFIG:", {
+  host: config.sql.host,
+  port: config.sql.port,
+  user: config.sql.user,
+  password: config.sql.password,
+  database: config.sql.database
+});
+
 const pool = mysql.createPool({
   host: config.sql.host,
   user: config.sql.user,
