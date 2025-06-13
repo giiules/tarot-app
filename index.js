@@ -3,7 +3,7 @@ const config = require('./config');
 const mysql = require('mysql2');
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 39450;
 
 const pool = mysql.createPool({
   host: config.sql.host,
